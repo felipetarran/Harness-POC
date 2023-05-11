@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_Harness_POC_1683821490245-push-trigger-input-set
+  identifier: Build_Harness_POC_1683821490245pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: POC_Ream
+  pipeline:
+    identifier: Build_Harness_POC_1683821490245
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
