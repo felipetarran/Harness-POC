@@ -76,3 +76,6 @@ pipeline:
                 - AllErrors
               action:
                 type: StageRollback
+        variables: []
+        delegateSelectors:
+          - helm-delegate
