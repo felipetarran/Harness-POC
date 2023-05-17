@@ -11,6 +11,41 @@ pipeline:
         repoName: felipetarran/Harness-POC
   stages:
     - stage:
+        name: deploy k8s
+        identifier: deploy_k8s
+        description: ""
+        type: Deployment
+        spec:
+          deploymentType: NativeHelm
+          execution:
+            steps:
+              - step:
+                  type: HelmDeploy
+                  name: HelmDeploy_1
+                  identifier: HelmDeploy_1
+                  spec:
+                    skipDryRun: false
+                    ignoreReleaseHistFailStatus: false
+                  timeout: 10m
+            rollbackSteps: []
+          service:
+            serviceRef: HarnessPoc
+          environment:
+            environmentRef: HarnessPOC
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: kubernetesream
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
+        variables: []
+        delegateSelectors:
+          - helm-delegate
+    - stage:
         identifier: build
         name: build
         spec:
@@ -35,47 +70,3 @@ pipeline:
             spec: {}
             type: Cloud
         type: CI
-    - stage:
-        name: deploy k8s
-        identifier: deploy_k8s
-        description: ""
-        type: Deployment
-        spec:
-          deploymentType: NativeHelm
-          service:
-            serviceRef: HarnessPoc
-          execution:
-            steps:
-              - step:
-                  name: Helm Deployment
-                  identifier: helmDeployment
-                  type: HelmDeploy
-                  timeout: 10m
-                  spec:
-                    skipDryRun: false
-                    ignoreReleaseHistFailStatus: false
-                    delegateSelectors:
-                      - helm-delegate
-                  failureStrategies: []
-            rollbackSteps:
-              - step:
-                  name: Helm Rollback
-                  identifier: helmRollback
-                  type: HelmRollback
-                  timeout: 10m
-                  spec: {}
-          environment:
-            environmentRef: HarnessPOC
-            deployToAll: false
-            infrastructureDefinitions:
-              - identifier: kubernetesream
-        tags: {}
-        failureStrategies:
-          - onFailure:
-              errors:
-                - AllErrors
-              action:
-                type: StageRollback
-        variables: []
-        delegateSelectors:
-          - helm-delegate
