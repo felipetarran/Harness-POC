@@ -22,7 +22,7 @@ pipeline:
                   name: docker_build
                   spec:
                     connectorRef: AWS_REAM
-                    image: 883922500875.dkr.ecr.us-east-1.amazonaws.com/hrnspoc
+                    image: .
                   timeout: ""
                   type: Plugin
           platform:
