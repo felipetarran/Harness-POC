@@ -22,7 +22,7 @@ pipeline:
                   name: docker_build
                   spec:
                     connectorRef: AWS_REAM
-                    image: harness-poc
+                    image: hrnspoc
                   timeout: ""
                   type: Plugin
           platform:
