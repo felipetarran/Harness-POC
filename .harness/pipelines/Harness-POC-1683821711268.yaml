@@ -21,11 +21,8 @@ pipeline:
                   identifier: dockerbuild
                   name: docker_build
                   spec:
-                    image: plugins/docker
-                    settings:
-                      dry_run: "true"
-                      repo: hello/world
-                      tags: latest
+                    connectorRef: AWS_REAM
+                    image: harness-poc
                   timeout: ""
                   type: Plugin
           platform:
@@ -35,3 +32,44 @@ pipeline:
             spec: {}
             type: Cloud
         type: CI
+    - stage:
+        name: deploy k8s
+        identifier: deploy_k8s
+        description: ""
+        type: Deployment
+        spec:
+          deploymentType: NativeHelm
+          service:
+            serviceRef: HarnessPoc
+          execution:
+            steps:
+              - step:
+                  name: Helm Deployment
+                  identifier: helmDeployment
+                  type: HelmDeploy
+                  timeout: 10m
+                  spec:
+                    skipDryRun: false
+                    ignoreReleaseHistFailStatus: false
+                    delegateSelectors:
+                      - helm-delegate
+                  failureStrategies: []
+            rollbackSteps:
+              - step:
+                  name: Helm Rollback
+                  identifier: helmRollback
+                  type: HelmRollback
+                  timeout: 10m
+                  spec: {}
+          environment:
+            environmentRef: HarnessPOC
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: kubernetesream
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
