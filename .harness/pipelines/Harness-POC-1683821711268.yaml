@@ -42,28 +42,19 @@ pipeline:
         type: Deployment
         spec:
           deploymentType: NativeHelm
-          service:
-            serviceRef: HarnessPoc
           execution:
             steps:
               - step:
-                  name: Helm Deployment
-                  identifier: helmDeployment
                   type: HelmDeploy
-                  timeout: 10m
+                  name: HelmDeploy_1
+                  identifier: HelmDeploy_1
                   spec:
                     skipDryRun: false
                     ignoreReleaseHistFailStatus: false
-                    delegateSelectors:
-                      - helm-delegate
-                  failureStrategies: []
-            rollbackSteps:
-              - step:
-                  name: Helm Rollback
-                  identifier: helmRollback
-                  type: HelmRollback
                   timeout: 10m
-                  spec: {}
+            rollbackSteps: []
+          service:
+            serviceRef: HarnessPoc
           environment:
             environmentRef: HarnessPOC
             deployToAll: false
