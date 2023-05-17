@@ -11,31 +11,6 @@ pipeline:
         repoName: felipetarran/Harness-POC
   stages:
     - stage:
-        identifier: build
-        name: build
-        spec:
-          cloneCodebase: true
-          execution:
-            steps:
-              - step:
-                  type: BuildAndPushECR
-                  name: BuildAndPushECR_1
-                  identifier: BuildAndPushECR_1
-                  spec:
-                    connectorRef: AWS_REAM
-                    region: us-east-1
-                    account: "883922500875"
-                    imageName: hrnspoc
-                    tags:
-                      - "1"
-          platform:
-            arch: Amd64
-            os: Linux
-          runtime:
-            spec: {}
-            type: Cloud
-        type: CI
-    - stage:
         name: deploy k8s
         identifier: deploy_k8s
         description: ""
@@ -70,3 +45,28 @@ pipeline:
         variables: []
         delegateSelectors:
           - helm-delegate
+    - stage:
+        identifier: build
+        name: build
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: BuildAndPushECR
+                  name: BuildAndPushECR_1
+                  identifier: BuildAndPushECR_1
+                  spec:
+                    connectorRef: AWS_REAM
+                    region: us-east-1
+                    account: "883922500875"
+                    imageName: hrnspoc
+                    tags:
+                      - "1"
+          platform:
+            arch: Amd64
+            os: Linux
+          runtime:
+            spec: {}
+            type: Cloud
+        type: CI
