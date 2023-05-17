@@ -1,6 +1,6 @@
 apiVersion: v2
-name: helm
-description: A Helm chart for Kubernetes
+name: Harness-Poc
+description: A helm chart that deploys sample python application
 
 # A chart can be either an 'application' or a 'library' chart.
 #
