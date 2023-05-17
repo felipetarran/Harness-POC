@@ -18,13 +18,16 @@ pipeline:
           execution:
             steps:
               - step:
-                  identifier: dockerbuild
-                  name: docker_build
+                  type: BuildAndPushECR
+                  name: BuildAndPushECR_1
+                  identifier: BuildAndPushECR_1
                   spec:
                     connectorRef: AWS_REAM
-                    image: 883922500875.dkr.ecr.us-east-1.amazonaws.com/hrnspoc:1
-                  timeout: ""
-                  type: Plugin
+                    region: us-east-1
+                    account: "883922500875"
+                    imageName: hrnspoc
+                    tags:
+                      - "1"
           platform:
             arch: Amd64
             os: Linux
