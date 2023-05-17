@@ -1,5 +1,5 @@
 apiVersion: v2
-name: Harness-Poc
+name: harness-poc
 description: A helm chart that deploys sample python application
 
 # A chart can be either an 'application' or a 'library' chart.
