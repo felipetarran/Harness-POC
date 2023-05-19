@@ -25,8 +25,8 @@ pipeline:
                     shell: Sh
                     command: |-
                       echo <+codebase.commitSha>
-                      id = <+codebase.commitSha>
-                      idtag = ${id:0:5}
+                      commithash = <+codebase.commitSha>
+                      idtag = ${commithash:0:5}
                       echo $idtag
               - step:
                   type: BuildAndPushECR
