@@ -23,7 +23,11 @@ pipeline:
                   identifier: Run_1
                   spec:
                     shell: Sh
-                    command: echo <+codebase.commitSha>
+                    command: |-
+                      echo <+codebase.commitSha>
+                      id = <+codebase.commitSha>
+                      idtag = ${id:0:5}
+                      echo $idtag
               - step:
                   type: BuildAndPushECR
                   name: BuildAndPushECR_1
