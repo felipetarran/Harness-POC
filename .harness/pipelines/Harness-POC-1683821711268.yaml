@@ -22,7 +22,7 @@ pipeline:
                   name: Versionate
                   identifier: Versionate
                   spec:
-                    shell: Sh
+                    shell: Bash
                     command: echo ${workflow.releaseNo}
               - step:
                   type: BuildAndPushECR
