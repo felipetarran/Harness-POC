@@ -38,7 +38,7 @@ pipeline:
                     account: "883922500875"
                     imageName: hrnspoc
                     tags:
-                      - "1"
+                      - $IDTAG
           platform:
             arch: Amd64
             os: Linux
