@@ -25,7 +25,7 @@ pipeline:
                     shell: Sh
                     command: |-
                       echo <+codebase.commitSha>
-                      commithash = <+codebase.commitSha>
+                      commithash=<+codebase.commitSha>
                       idtag = ${commithash:0:5}
                       echo $idtag
               - step:
