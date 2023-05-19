@@ -18,12 +18,12 @@ pipeline:
           execution:
             steps:
               - step:
-                  type: Background
-                  name: Versionate
-                  identifier: Versionate
+                  type: Run
+                  name: Run_1
+                  identifier: Run_1
                   spec:
-                    shell: Bash
-                    command: echo ${workflow.releaseNo}
+                    shell: Sh
+                    command: echo <+codebase.commitSha>
               - step:
                   type: BuildAndPushECR
                   name: BuildAndPushECR_1
