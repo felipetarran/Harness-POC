@@ -28,6 +28,7 @@ pipeline:
                       commithash=<+codebase.commitSha>
                       echo $commithash
                       echo IDTAG=${commithash::5}
+                      echo <+execution.steps.Run_1.spec.envVariables.tag> = $IDTAG
               - step:
                   type: BuildAndPushECR
                   name: BuildAndPushECR_1
@@ -38,7 +39,7 @@ pipeline:
                     account: "883922500875"
                     imageName: hrnspoc
                     tags:
-                      - <+execution.steps.Run_1.output.outputVariables>
+                      - <+execution.steps.Run_1.spec.envVariables.tag>
           platform:
             arch: Amd64
             os: Linux
