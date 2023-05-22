@@ -19,7 +19,7 @@ pipeline:
             steps:
               - step:
                   type: Run
-                  name: Run_1
+                  name: commit-hash
                   identifier: Run_1
                   spec:
                     shell: Bash
@@ -39,7 +39,8 @@ pipeline:
                     region: us-east-1
                     account: "883922500875"
                     imageName: hrnspoc
-                    tags: <+input>
+                    tags:
+                      - <+execution.steps.Run_1.output.outputVariables.IDTAG>
           platform:
             arch: Amd64
             os: Linux
