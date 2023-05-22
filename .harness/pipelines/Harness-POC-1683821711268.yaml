@@ -38,8 +38,7 @@ pipeline:
                     region: us-east-1
                     account: "883922500875"
                     imageName: hrnspoc
-                    tags:
-                      - $IDTAG
+                    tags: <+input>
           platform:
             arch: Amd64
             os: Linux
