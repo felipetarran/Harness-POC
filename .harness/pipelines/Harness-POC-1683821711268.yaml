@@ -39,7 +39,7 @@ pipeline:
                     account: "883922500875"
                     imageName: hrnspoc
                     tags:
-                      - <+execution.steps.Run_1.output.outputVariables>
+                      - $IDTAG
           platform:
             arch: Amd64
             os: Linux
