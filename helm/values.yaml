@@ -8,7 +8,7 @@ image:
   repository: "883922500875.dkr.ecr.us-east-1.amazonaws.com/hrnspoc"
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ${image_tag}
+  tag: <+stage.variables.image_tag>
 
 imagePullSecrets: []
 nameOverride: ""
