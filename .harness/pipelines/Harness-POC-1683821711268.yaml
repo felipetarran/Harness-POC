@@ -80,6 +80,10 @@ pipeline:
                 - AllErrors
               action:
                 type: StageRollback
-        variables: []
+        variables:
+          - name: image_tag
+            type: String
+            description: ""
+            value: <+stages.build.spec.execution.steps.Run_1.output.outputVariables.IDTAG>
         delegateSelectors:
           - helm-delegate
