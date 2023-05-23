@@ -7,7 +7,7 @@ pipeline:
     ci:
       codebase:
         build: <+input>
-        connectorRef: <+secrets.getValue("connectorRef")>​​
+        connectorRef: account.Github_OAuth_1683817174712
         repoName: felipetarran/Harness-POC
   stages:
     - stage:
