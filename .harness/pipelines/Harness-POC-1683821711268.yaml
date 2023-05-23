@@ -7,7 +7,7 @@ pipeline:
     ci:
       codebase:
         build: <+input>
-        connectorRef: account.Github_OAuth_1683817174712
+        connectorRef: <+secrets.getValue("Tz23GLqaRM-uv40sbG7rkQ.connectorRef")>​​
         repoName: felipetarran/Harness-POC
   stages:
     - stage:
@@ -37,7 +37,7 @@ pipeline:
                   spec:
                     connectorRef: AWS_REAM
                     region: us-east-1
-                    account: "883922500875"
+                    account: <+secrets.getValue("Tz23GLqaRM-uv40sbG7rkQ.AWSACCOUNT")>​​
                     imageName: hrnspoc
                     tags:
                       - <+execution.steps.Run_1.output.outputVariables.IDTAG>
