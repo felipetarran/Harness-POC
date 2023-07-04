@@ -37,7 +37,7 @@ pipeline:
                   spec:
                     connectorRef: AWS_REAM
                     region: us-east-1
-                    account: "883922500875"
+                    account: <+secrets.getValue("AWSACCOUNT")>​​
                     imageName: hrnspoc
                     tags:
                       - <+execution.steps.Run_1.output.outputVariables.IDTAG>
