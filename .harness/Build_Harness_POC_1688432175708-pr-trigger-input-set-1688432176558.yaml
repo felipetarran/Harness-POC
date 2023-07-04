@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_Harness_POC_1688432175708-pr-trigger-input-set
+  identifier: Build_Harness_POC_1688432175708prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: Partner_Bootcamp_Veronezzi
+  pipeline:
+    identifier: Build_Harness_POC_1688432175708
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
