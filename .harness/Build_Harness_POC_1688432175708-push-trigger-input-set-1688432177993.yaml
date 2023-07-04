@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_Harness_POC_1688432175708-push-trigger-input-set
+  identifier: Build_Harness_POC_1688432175708pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: Partner_Bootcamp_Veronezzi
+  pipeline:
+    identifier: Build_Harness_POC_1688432175708
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>

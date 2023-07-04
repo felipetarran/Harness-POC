@@ -1,0 +1,97 @@
+pipeline:
+  identifier: Build_Harness_POC_1688432175708
+  name: Build Harness-POC
+  orgIdentifier: default
+  projectIdentifier: Partner_Bootcamp_Veronezzi
+  properties:
+    ci:
+      codebase:
+        build: <+input>
+        connectorRef: account.Github_OAuth_1688432142660
+        repoName: felipetarran/Harness-POC
+  stages:
+    - stage:
+        identifier: build
+        name: build
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: getcommithash
+                  identifier: getcommithash
+                  spec:
+                    shell: Bash
+                    command: |-
+                      echo <+codebase.commitSha>
+                      commithash=<+codebase.commitSha>
+                      echo $commithash
+                      export IDTAG=${commithash::5}
+                    outputVariables:
+                      - name: IDTAG
+              - step:
+                  type: BuildAndPushECR
+                  name: BuildAndPushECR
+                  identifier: BuildAndPushECR
+                  spec:
+                    connectorRef: AWS_REAM
+                    region: us-east-1
+                    account: "883922500875"
+                    imageName: api
+                    tags:
+                      - <+execution.steps.getcommithash.output.outputVariables.IDTAG>
+                    caching: true
+          platform:
+            arch: Amd64
+            os: Linux
+          runtime:
+            spec: {}
+            type: Cloud
+        type: CI
+    - stage:
+        name: deploy-dev
+        identifier: deploydev
+        description: ""
+        type: Deployment
+        spec:
+          deploymentType: NativeHelm
+          service:
+            serviceRef: HarnessPoc
+          environment:
+            environmentRef: k8sdev
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: k8sdev
+          execution:
+            steps:
+              - step:
+                  type: HelmDeploy
+                  name: HelmDeploy_1
+                  identifier: HelmDeploy_1
+                  spec:
+                    skipDryRun: false
+                    ignoreReleaseHistFailStatus: false
+                    delegateSelectors:
+                      - helm-delegate
+                  timeout: 10m
+                  failureStrategies:
+                    - onFailure:
+                        errors:
+                          - AllErrors
+                        action:
+                          type: StageRollback
+            rollbackSteps: []
+        tags: {}
+        variables:
+          - name: image_tag
+            type: String
+            description: ""
+            required: false
+            value: <+stages.build.spec.execution.steps.getcommithash.output.outputVariables.IDTAG>
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
