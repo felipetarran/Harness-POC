@@ -49,3 +49,31 @@ pipeline:
             spec: {}
             type: Cloud
         type: CI
+    - stage:
+        name: deploy-dev
+        identifier: deploydev
+        description: ""
+        type: Deployment
+        spec:
+          deploymentType: NativeHelm
+          service:
+            serviceRef: HarnessPoc
+          environment:
+            environmentRef: k8sdev
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: k8sdev
+          execution:
+            steps:
+              - step:
+                  type: HelmDeploy
+                  name: HelmDeploy_1
+                  identifier: HelmDeploy_1
+                  spec:
+                    skipDryRun: false
+                    ignoreReleaseHistFailStatus: false
+                    delegateSelectors:
+                      - helm-delegate
+                  timeout: 10m
+            rollbackSteps: []
+        tags: {}
