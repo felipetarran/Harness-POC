@@ -77,3 +77,9 @@ pipeline:
                   timeout: 10m
             rollbackSteps: []
         tags: {}
+        variables:
+          - name: image_tag
+            type: String
+            description: ""
+            required: false
+            value: <+stages.build.spec.execution.steps.Run_1.output.outputVariables.IDTAG>
