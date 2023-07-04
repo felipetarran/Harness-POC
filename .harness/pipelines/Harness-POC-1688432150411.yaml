@@ -18,16 +18,30 @@ pipeline:
           execution:
             steps:
               - step:
-                  identifier: dockerbuild
-                  name: docker_build
+                  type: Run
+                  name: getcommithash
+                  identifier: getcommithash
                   spec:
-                    image: plugins/docker
-                    settings:
-                      dry_run: "true"
-                      repo: hello/world
-                      tags: latest
-                  timeout: ""
-                  type: Plugin
+                    shell: Bash
+                    command: |-
+                      echo <+codebase.commitSha>
+                      commithash=<+codebase.commitSha>
+                      echo $commithash
+                      export IDTAG=${commithash::5}
+                    outputVariables:
+                      - name: IDTAG
+              - step:
+                  type: BuildAndPushECR
+                  name: BuildAndPushECR
+                  identifier: BuildAndPushECR
+                  spec:
+                    connectorRef: AWS_REAM
+                    region: us-east-1
+                    account: "883922500875"
+                    imageName: api
+                    tags:
+                      - <+execution.steps.getcommithash.output.outputVariables.IDTAG>
+                    caching: true
           platform:
             arch: Amd64
             os: Linux
