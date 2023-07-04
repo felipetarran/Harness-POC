@@ -89,3 +89,9 @@ pipeline:
             description: ""
             required: false
             value: <+stages.build.spec.execution.steps.Run_1.output.outputVariables.IDTAG>
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
