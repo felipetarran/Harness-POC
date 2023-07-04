@@ -88,7 +88,7 @@ pipeline:
             type: String
             description: ""
             required: false
-            value: <+stages.build.spec.execution.steps.Run_1.output.outputVariables.IDTAG>
+            value: <+stages.build.spec.execution.steps.getcommithash.output.outputVariables.IDTAG>
         failureStrategies:
           - onFailure:
               errors:
